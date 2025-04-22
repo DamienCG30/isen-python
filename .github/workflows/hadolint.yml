@@ -12,3 +12,4 @@ jobs:
         with:
           dockerfile: "Dockerfile"
           failure-threshold: warning
+          format: codeclimate
