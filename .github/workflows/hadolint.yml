@@ -1,22 +1,13 @@
-name: CI
 
 on: [push]
 
 jobs:
-  Hadolint:
-    name: Hadolint
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@v4
-
-      - name: Check dockerfiles with Hadolint
-        uses: essentialkaos/hadolint-action@v1
-        with:
-          format: json
-          verbose: true
-          strict-labels: true
-          failure-threshold: warning
-          trusted-registry: repo.domain.com
-          files: Dockerfile
+        steps:
+        - uses: actions/checkout@v3
+        - uses: hadolint/hadolint-action@v3.1.0
+          with:
+            dockerfile: Dockerfile
+            format: codeclimate
