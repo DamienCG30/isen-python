@@ -22,25 +22,19 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         pylint --disable=C,R0801 --fail-under=7 $(git ls-files '*.py')
-
-  unit-tests:
-    runs-on: ubuntu-latest
-    steps:
-    - run: |
+    - name: Unit tests with pylint
+      run: |
         status=0
         for file in $(git ls-files './unit_tests/*.py'); do
-          echo "🔍 Linting $file"
+          echo "Linting $file"
           pylint --disable=C,R0801 --fail-under=7 "$file" || status=1
         done
         exit $status
-
-  integration-tests:
-    runs-on: ubuntu-latest
-    steps:
-    - run: |
+    - name: Integration tests with pylint
+      run: |
         status=0
         for file in $(git ls-files './integration_tests/*.py'); do
-          echo "🔍 Linting $file"
-          pylint --disable=C,R0801 --fail-under=7 "$file" || status=1
+        echo "Linting $file"
+        pylint --disable=C,R0801 --fail-under=7 "$file" || status=1
         done
         exit $status
