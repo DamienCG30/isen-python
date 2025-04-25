@@ -1,9 +1,9 @@
-name: Generate SBOM
+name: Generate and Scan SBOM
 
 on: push
 
 jobs:
-  sbom:
+  sbom-scan:
     runs-on: ubuntu-latest
     permissions: write-all
 
@@ -15,13 +15,19 @@ jobs:
         uses: anchore/sbom-action@v0.15.4
         with:
           path: .
-          output-file: sbom.syft.json
+          output-file: project-sbom.syft.json
           format: syft-json
 
-      - name: Upload SBOM as artifact
+      - name: Scan SBOM with Grype
+        uses: anchore/scan-action@v6
+        with:
+          sbom: project-sbom.syft.json
+
+      - name: Upload SBOM artifact
         uses: actions/upload-artifact@v3.1.3
         with:
           name: sbom
-          path: sbom.syft.json
+          path: project-sbom.syft.json
+
 
 
