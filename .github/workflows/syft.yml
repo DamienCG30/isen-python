@@ -4,6 +4,9 @@ on: push
 
 jobs:
   sbom:
+    permissions:
+      actions: read
+      contents: write
     runs-on: ubuntu-latest
 
     steps:
