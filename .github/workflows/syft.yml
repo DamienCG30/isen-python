@@ -4,25 +4,24 @@ on: push
 
 jobs:
   sbom:
-    permissions:
-      actions: read
-      contents: write
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
+
       - name: Generate SBOM with Syft
         uses: anchore/sbom-action@v0.15.4
         with:
-          path: .            
-          output-file: sbom.syft.json 
-          format: syft-json           
+          path: .
+          output-file: sbom.syft.json
+          format: syft-json
 
       - name: Upload SBOM as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3.1.3
         with:
           name: sbom
           path: sbom.syft.json
+
 
