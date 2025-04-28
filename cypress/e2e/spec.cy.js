@@ -27,6 +27,7 @@ describe('Create and connect to an account', () => {
     cy.get('[id^=your_pass]').type('1hstesh<23456789')
     cy.get('form').contains('Log in').click()
     cy.url().should('include', '/home')
+    cy.wait(2000)
     cy.contains('FAVOURITE')
   })
 })
@@ -35,7 +36,7 @@ describe('Create and connect to an account', () => {
 describe('Put item in favourite', () => {
   it('Connect to OC commerce and put in favourite', () => {
 
-    /*
+    
     // To uncomment if the previous account is already created and launched in local
     // In this test you should load the home url and connect with the previous account
     cy.visit('http://127.0.0.1:8080/home')
@@ -46,7 +47,7 @@ describe('Put item in favourite', () => {
     cy.get('label[for="agree-term"]').click()
     cy.get('[id^=signin]').click()
     cy.url().should('include', '/home')
-    */
+    
 
     // You will go to favourite pages to make sure there is no favourite
     cy.contains('FAVOURITE').click()
@@ -63,11 +64,7 @@ describe('Put item in favourite', () => {
     cy.contains('FAVOURITE').click()
     cy.url().should('include', '/favourite')
 
-    // You will then delete the item an check it has been successfully deleted
-    // .get('a[onclick^="markFavourite"]').click({multiple: true})
-    // cy.get('#favBtn').click()
-
-    // should work if there is at least 1 element in favourite
+    // Should work if there is at least 1 element in favourite
     function clickAllFavourites() {
       cy.get('a[onclick^="markFavourite"]').then(($elements) => {
         if ($elements.length > 0) {
@@ -84,10 +81,8 @@ describe('Put item in favourite', () => {
         }
       });
     }
-    
-    // Et on lance :
+  
     clickAllFavourites();
     
-
   })
 })
