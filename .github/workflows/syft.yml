@@ -1,0 +1,27 @@
+name: Generate and Scan SBOM
+
+on: push
+
+jobs:
+  sbom-scan:
+    runs-on: ubuntu-24.04
+    permissions: write-all
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate SBOM with Syft
+        uses: anchore/sbom-action@v0
+        with:
+          path: .
+          output-file: project-sbom.spdx.json
+          format: spdx-json
+
+      - name: Scan SBOM with Grype
+        uses: anchore/scan-action@v6
+        with:
+          sbom: project-sbom.spdx.json
+
+
+
