@@ -35,6 +35,7 @@ describe('Create and connect to an account', () => {
 
 */
 
+// Can fail, because of line 68
 describe('Put item in favourite', () => {
   it('Connect to OC commerce and put in favourite', () => {
 
