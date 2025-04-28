@@ -34,15 +34,6 @@ jobs:
       - name: Wait for server to be ready
         run: npx wait-on http://127.0.0.1:8080 || exit 1 # To make sure that the server is ready
 
-      - name: Install Node.js (for Cypress)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install Cypress and dependencies
-        run: |
-          npm install
-
       - name: Run Cypress tests on ${{ matrix.browser }}
         uses: cypress-io/github-action@v6
         with:
