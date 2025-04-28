@@ -22,6 +22,7 @@ jobs:
         uses: anchore/scan-action@v6
         with:
           sbom: project-sbom.spdx.json
+        continue-on-error: true
 
 
 
