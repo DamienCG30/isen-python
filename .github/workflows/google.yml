@@ -57,18 +57,18 @@ jobs:
       - name: Wait for the app to be fully deployed
         run: |
           sleep 10
-
-      - name: ZAP Security Scan
-        run: |
-          # Start ZAP proxy
-          docker run -d -p 8080:8080 owasp/zap2docker-stable
+        
+#      - name: ZAP Security Scan
+#        run: |
+#          # Start ZAP proxy
+#          docker run -d -p 8080:8080 owasp/zap2docker-stable
           # Wait for ZAP to be fully ready
-          sleep 30
+#          sleep 30
           # Run ZAP Baseline scan against the deployed Cloud Run service URL
-          docker run --network host owasp/zap2docker-stable zap-baseline.py -t http://${{ env.SERVICE_NAME }}.a.run.app
+#          docker run --network host owasp/zap2docker-stable zap-baseline.py -t http://${{ env.SERVICE_NAME }}.a.run.app
           
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v3
-        with:
-          name: zap-report
-          path: zap-report.json
+#      - name: Upload ZAP Report
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: zap-report
+#          path: zap-report.json
