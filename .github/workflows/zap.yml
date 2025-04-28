@@ -1,0 +1,33 @@
+name: ZAP Security Scan
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  zap-scan:
+    runs-on: ubuntu-24.04
+    steps:
+      # Checkout le code du repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Exécution de l'application dans Docker
+      - name: Build and Run Docker Container
+        run: |
+          docker build -t my-app .
+          docker run -d -p 8080:8080 my-app
+
+      # Ajouter ZAP et exécuter un scan
+      - name: Run ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.5.0
+        with:
+          target: 'http://localhost:8080'  # L'URL de l'application en cours d'exécution dans Docker
+
+      # Upload du rapport JSON des résultats du scan
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: zap-report
+          path: zap-report.json
