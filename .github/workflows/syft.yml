@@ -4,30 +4,24 @@ on: push
 
 jobs:
   sbom-scan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions: write-all
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Generate SBOM with Syft
-        uses: anchore/sbom-action@v0.15.4
+        uses: anchore/sbom-action@v0
         with:
           path: .
-          output-file: project-sbom.syft.json
-          format: syft-json
+          output-file: project-sbom.spdx.json
+          format: spdx-json
 
       - name: Scan SBOM with Grype
         uses: anchore/scan-action@v6
         with:
-          sbom: project-sbom.syft.json
-
-      - name: Upload SBOM artifact
-        uses: actions/upload-artifact@v3.1.3
-        with:
-          name: sbom
-          path: project-sbom.syft.json
+          sbom: project-sbom.spdx.json
 
 
 
